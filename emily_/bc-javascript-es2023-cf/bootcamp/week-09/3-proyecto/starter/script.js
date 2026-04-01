@@ -1,0 +1,269 @@
+// ============================================
+// PROYECTO SEMANA 09: Catálogo de Elementos
+// ============================================
+//
+// INSTRUCCIONES:
+// 1. Define tu dominio en DOMAIN_NAME y VALUE_LABEL
+// 2. Completa el array `items` con datos de tu dominio
+// 3. Implementa cada función siguiendo los TODOs
+// 4. Ejecuta con: node script.js
+//
+// Tu catálogo debe tener:
+//   - Mínimo 6 objetos con al menos 5 propiedades cada uno
+//   - Al menos 1 propiedad numérica, 1 booleana y 1 opcional
+// ============================================
+
+// ============================================
+// CONFIGURACIÓN DEL DOMINIO
+// ============================================
+
+// TODO: Reemplaza con el nombre de tu dominio
+// Ejemplos: "Biblioteca", "Farmacia", "Gimnasio", "Restaurante"
+const DOMAIN_NAME = "trasporte publico inteligente ";
+
+// TODO: Reemplaza con el nombre del tipo de elemento
+// Ejemplos: "libros", "medicamentos", "equipos", "platillos"
+const VALUE_LABEL = "buses";
+// ============================================
+// DATOS DEL CATÁLOGO
+// ============================================
+
+// TODO: Define al menos 6 objetos con mínimo 5 propiedades cada uno
+// Incluye:
+//   - id (número)
+//   - name (string)
+//   - Al menos 1 propiedad numérica (price, pages, duration, capacity, etc.)
+//   - Al menos 1 propiedad booleana (available, active, inStock, visible, etc.)
+//   - Al menos 1 propiedad opcional (no todos los objetos la tienen)
+
+const items = [
+{ id:1, name: "bus ruta 46", pasajeros : 40, active : true, ruta : "centro", tipo : "urbano "},
+{ id: 2, name: "bus ruta d20", pasajeros : 45, active :true, ruta : "norte", tipo : "urbano "},
+{ id : 3, name: "bus ruta j24", pasajeros : 35, active : false, ruta: "sur", tipo : "urbano"},
+{ id : 4, name: "bus ruta h131", pasajeros : 50 ,active : true, ruta : "norte ", tipo : "urbano"},
+{ id :5, name: "bus ruta m26", pasajeros : 25, active : false, ruta : "centro", tipo : "urbano"},
+{ id : 6, name: "bus ruta k45", pasajeros : 35, active : true, ruta : "sur", tipo: "urbano"},
+{ id : 7, name: "bus ruta n25",pasajeros : 30,active : true, ruta: "norte", tipo : "urbano"},
+{ id : 8, name: "busg26",pasajeros : 38, active : false,ruta : "centro", tipo: "urbano"}
+
+];
+
+// ============================================
+// INSPECCIÓN CON Object.*
+// ============================================
+
+/**
+ * Muestra las claves y valores de un objeto usando Object.entries()
+ * @param {Object} item - El objeto a inspeccionar
+ */
+const inspectItem = (item) => {
+  console.log(`\n📋 Detalle de: ${item.name}`);
+  object.entries(item).forEach(([key,value])=>{
+  console.log('${key.padend(15)}:${value}');
+  });
+  // TODO: Usar Object.entries() + forEach para imprimir cada clave y valor
+  // Alinear las claves con padEnd para formato de tabla
+};
+
+/**
+ * Calcula estadísticas numéricas del catálogo
+ * @param {string} numericKey - El nombre de la propiedad numérica a analizar
+ */
+const calculateStats = (numericKey) => {
+   const values = items.map(item => item[numericKey]);
+
+  const total = values.reduce((acc, val) => acc + val, 0);
+  const promedio = total / values.length;
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+
+  console.log("\n📊 Estadísticas:");
+  console.log(`Total: ${total}`);
+  console.log(`Promedio: ${promedio.toFixed(1)}`);
+  console.log(`Máximo: ${max}`);
+  console.log(`Mínimo: ${min}`);
+
+  // TODO: Usar Object.values() sobre el array de valores numéricos
+  // Calcular: total, promedio, máximo, mínimo
+  // Imprimir los resultados
+};
+
+// ============================================
+// VERIFICACIÓN CON Object.hasOwn()
+// ============================================
+
+/**
+ * Muestra el detalle de un elemento, incluyendo propiedades opcionales
+ * si existen en ese objeto
+ * @param {Object} item - El objeto a mostrar
+ */
+const showWithOptionals = (item) => {
+  console.log(`\n→ ${item.name}`);
+  console.log(`Pasajeros: ${item.pasajeros}`);
+  console.log(`Activo: ${item.active}`);
+
+  if (Object.hasOwn(item, "nota")) {
+    console.log(`Nota: ${item.nota}`);
+  }
+  // TODO: Mostrar propiedades básicas siempre
+  // TODO: Usar Object.hasOwn() para verificar propiedades opcionales
+  //       y mostrarlas solo si existen
+};
+
+// ============================================
+// ITERACIÓN CON for...in
+// ============================================
+
+/**
+ * Imprime todas las propiedades de un objeto usando for...in
+ * @param {Object} item - El objeto a recorrer
+ */
+const printAllProperties = (item) => {
+  console.log(`\n🔍 Propiedades de "${item.name}":`);
+   for (const key in item) {
+    if (Object.hasOwn(item, key)) {
+      console.log(`${key}: ${item[key]}`);
+    }
+  }
+  // TODO: Usar for...in + Object.hasOwn() para recorrer propiedades propias
+  // Imprimir cada clave y su valor
+};
+
+// ============================================
+// SPREAD OPERATOR
+// ============================================
+
+/**
+ * Aplica una actualización inmutable a un elemento
+ * @param {Object} item - El objeto original
+ * @param {Object} changes - Las propiedades a actualizar
+ * @returns {Object} Nuevo objeto con los cambios aplicados
+ */
+const updateItem = (item, changes) => {
+  
+  // TODO: Retornar un nuevo objeto usando spread + changes
+  // El objeto original NO debe modificarse
+  return { ...item, ...changes};
+};
+
+// ============================================
+// OPERACIONES CON EL ARRAY
+// ============================================
+
+/**
+ * Filtra los elementos disponibles/activos
+ * @returns {Object[]} Array de elementos disponibles
+ */
+const getAvailable = () => {
+  // TODO: Usar filter() por la propiedad booleana de tu dominio
+  return items.filter(item => item.active === true);
+};
+
+/**
+ * Busca un elemento por su id
+ * @param {number} id - El id a buscar
+ * @returns {Object|undefined} El elemento encontrado o undefined
+ */
+const findById = (id) => {
+  // TODO: Usar find()
+  return undefined(item => item.id === id);
+
+};
+
+/**
+ * Agrega una propiedad calculada a cada elemento
+ * @returns {Object[]} Nuevo array con la propiedad adicional
+ */
+const addCalculatedProp = () => {
+  // TODO: Usar map() para agregar una propiedad calculada
+  // Ejemplos: priceWithTax, totalPages, formattedDuration
+  // Recuerda: item => ({ ...item, newProp: calculation })
+  return  items.map(item => ({
+    ...item,
+    pasajerosDoble: item.pasajeros * 2
+  }));
+};
+
+/**
+ * Ordena los elementos por valor numérico (sin mutar el original)
+ * @param {boolean} ascending - true para ascendente, false para descendente
+ * @returns {Object[]} Nuevo array ordenado
+ */
+const sortByNumericProp = (ascending = true) => {
+  // TODO: Usar [...items].sort() con un comparador
+  // No mutar el array original
+  return [...items].sort((a, b) =>
+    ascending ? a.pasajeros - b.pasajeros : b.pasajeros - a.pasajeros
+  );
+};
+
+// ============================================
+// REPORTE FINAL
+// ============================================
+
+/**
+ * Imprime el reporte completo del catálogo
+ */
+const buildReport = () => {
+  console.log("\n" + "=".repeat(50));
+  console.log(`📦 CATÁLOGO: ${DOMAIN_NAME.toUpperCase()}`);
+  console.log("=".repeat(50));
+
+  console.log(`Total: ${items.length}`);
+  console.log(`Activos: ${getAvailable().length}`);
+
+  calculateStats("pasajeros");
+
+  const ordenados = sortByNumericProp();
+  console.log("\n📋 Ordenados:");
+  ordenados.forEach(item => console.log(`${item.name} — ${item.pasajeros}`));
+
+  const max = ordenados[ordenados.length - 1];
+  const min = ordenados[0];
+
+  console.log(`\nMayor: ${max.name} (${max.pasajeros})`);
+  console.log(`Menor: ${min.name} (${min.pasajeros})`);
+
+  // TODO: Mostrar cantidad total de elementos
+  // TODO: Mostrar cuántos están disponibles/activos
+  // TODO: Mostrar estadísticas de la propiedad numérica principal
+  // TODO: Listar todos los elementos ordenados (usar sortByNumericProp)
+  // TODO: Mostrar el elemento con el valor numérico más alto y más bajo
+
+  console.log("=".repeat(50));
+};
+
+// ============================================
+// EJECUCIÓN PRINCIPAL
+// ============================================
+
+console.log(`\n🚀 Iniciando catálogo: ${DOMAIN_NAME}`);
+console.log(`   Total de ${VALUE_LABEL}: ${items.length}`);
+
+inspectItem(items[0]);
+calculateStats("pasajeros");
+items.forEach(showWithOptionals);
+printAllProperties(items[0]);
+
+const actualizado = updateItem(items[0], { pasajeros: 60 });
+console.log("\nActualizado:", actualizado);
+
+console.log("\nDisponibles:", getAvailable());
+
+console.log("\nBuscar id=1:", findById(1));
+console.log("Buscar id=99:", findById(99));
+
+console.log("\nCon cálculo:", addCalculatedProp());
+
+console.log("\nOrdenados:", sortByNumericProp());
+// TODO: Llamar a las funciones implementadas en este orden:
+// 1. inspectItem(items[0])
+// 2. calculateStats("nombreDeTuPropiedadNumerica")
+// 3. items.forEach(showWithOptionals)
+// 4. printAllProperties(items[0])
+// 5. Demostrar updateItem con un ejemplo
+// 6. Mostrar elementos disponibles con getAvailable()
+// 7. Demostrar findById con un id válido y uno inexistente
+// 8. Mostrar addCalculatedProp()
+// 9. Mostrar sortByNumericProp()
+// 10. buildReport()
